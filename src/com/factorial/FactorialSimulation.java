@@ -15,7 +15,7 @@ public class FactorialSimulation {
     
     public static void main(String []args){
         
-        System.out.println("Solving " + Max.NUMBER.getMax() + " factorial");
+        System.out.println("Solving " + Util.getLimit() + " factorial");
         
         long now = System.currentTimeMillis();
         BigInteger singleThread = new SingleThreadedFactorial().solve();

@@ -41,14 +41,14 @@ public class MultiThreadedFactorial {
         int i = 1;
         while (true) {
             Callable<BigInteger> solver;
-            if (i + threadToSolve < Max.NUMBER.getMax()) {
+            if (i + threadToSolve < Util.getLimit()) {
                 solver = new Solver(i, i + threadToSolve);
 
                 list.add(executor.submit(solver));
 
                 i += threadToSolve + 1;
             } else {
-                solver = new Solver(i, Max.NUMBER.getMax());
+                solver = new Solver(i, Util.getLimit());
 
                 list.add(executor.submit(solver));
 

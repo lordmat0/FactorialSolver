@@ -17,7 +17,7 @@ public class SingleThreadedFactorial {
 
         BigInteger current = new BigInteger("1");
 
-        for (int i = 2; i <= Max.NUMBER.getMax(); i++) {
+        for (int i = 2; i <= Util.getLimit(); i++) {
             current = current.multiply(BigInteger.valueOf(i));
         }
 

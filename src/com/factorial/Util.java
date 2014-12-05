@@ -9,16 +9,11 @@ package com.factorial;
  *
  * @author mat
  */
-public enum Max {
-    NUMBER(100_000);
+public class Util {    
+    private static int number = 100_000;
     
-    private int number;
     
-    private Max(int number){
-        this.number = number;
-    }
-    
-    public int getMax(){
+    public static int getLimit(){
         return number;
     }
 }
