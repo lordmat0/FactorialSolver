@@ -18,21 +18,18 @@ import java.util.concurrent.Future;
  *
  * @author mat
  */
-public class MultiThreadedFactorial {
+public class MultiThreadedFactorial implements FactorialSolver{
 
-    private int availableProcessors;
+    private final int availableProcessors;
     private int threadToSolve;
 
     public MultiThreadedFactorial() {
         availableProcessors = Runtime.getRuntime().availableProcessors();
         threadToSolve = Util.getLimit() / availableProcessors;
-
-        if (threadToSolve * availableProcessors != Util.getLimit()) {
-            // Tasks can't be divided without reminder
-            threadToSolve = 50_000;
-        } 
+        
     }
 
+    @Override
     public BigInteger solve() {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<Future<BigInteger>> list = new ArrayList<Future<BigInteger>>();
@@ -43,13 +40,13 @@ public class MultiThreadedFactorial {
         while (true) {
             Callable<BigInteger> solver;
             if (i + threadToSolve < Util.getLimit()) {
-                solver = new Solver(i, i + threadToSolve);
+                solver = new CallableSolver(i, i + threadToSolve);
 
                 list.add(executor.submit(solver));
 
                 i += threadToSolve + 1;
             } else {
-                solver = new Solver(i, Util.getLimit());
+                solver = new CallableSolver(i, Util.getLimit());
 
                 list.add(executor.submit(solver));
 
@@ -74,14 +71,20 @@ public class MultiThreadedFactorial {
         return current;
     }
 
+    @Override
+    public String getName() {
+        return MultiThreadedFactorial.class.getSimpleName();
+    }
+
 }
 
-class Solver implements Callable<BigInteger> {
+class CallableSolver implements Callable<BigInteger> {
 
     private final int min;
     private final int max;
+    private final int slice = 5000;
 
-    public Solver(int min, int max) {
+    public CallableSolver(int min, int max) {
         this.min = min;
         this.max = max;
     }
@@ -90,16 +93,16 @@ class Solver implements Callable<BigInteger> {
     public BigInteger call() throws Exception {
         BigInteger bigSum = BigInteger.ONE;
         BigInteger sum = BigInteger.ONE;
-
-        for (int i = min; i <= max; i += 5000) {
-            for (int k = i; k < i + 5000 && k <= max; k++) {
+        
+        for (int i = min; i <= max; i += slice) {
+            for (int k = i; k < i + slice && k <= max; k++) {
                 sum = sum.multiply(BigInteger.valueOf(k));
             }
             bigSum = bigSum.multiply(sum);
             sum = BigInteger.ONE;
         }
 
-        System.out.println("Completed " + min + " " + max);
+        System.out.println("CallableSolver completed " + min + " " + max);
 
         return bigSum;
     }

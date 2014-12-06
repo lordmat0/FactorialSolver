@@ -11,8 +11,9 @@ import java.math.BigInteger;
  *
  * @author mat
  */
-public class SingleThreadedFactorial {
+public class SingleThreadedFactorial implements FactorialSolver {
 
+    @Override
     public BigInteger solve() {
 
         BigInteger current = new BigInteger("1");
@@ -22,5 +23,10 @@ public class SingleThreadedFactorial {
         }
 
         return current;
+    }
+
+    @Override
+    public String getName() {
+        return SingleThreadedFactorial.class.getSimpleName();
     }
 }

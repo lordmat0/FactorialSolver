@@ -19,17 +19,20 @@ public class FactorialSimulation {
         System.out.println("Solving " + Util.getLimit() + " factorial");
 
         long now = System.currentTimeMillis();
+        
+        FactorialSolver singleThreadedFactorial = new SingleThreadedFactorial();
         BigInteger singleThread = null;
 
         FileLoader fileLoader = new FileLoader();
 
-        if (fileLoader.factorialExists(SingleThreadedFactorial.class.getSimpleName(), Util.getLimit())) {
-            singleThread = fileLoader.getFactorial(SingleThreadedFactorial.class.getSimpleName(), Util.getLimit());
+        if (fileLoader.factorialExists(singleThreadedFactorial.getName(), Util.getLimit())) {
+            singleThread = fileLoader.getFactorial(singleThreadedFactorial.getName(), Util.getLimit());
+            System.out.println("Reading from file");
         } else {
-            singleThread = new SingleThreadedFactorial().solve();
+            singleThread = singleThreadedFactorial.solve();
 
             FileSaver fileSaver = new FileSaver();
-            fileSaver.saveFactorial(SingleThreadedFactorial.class.getSimpleName(), Util.getLimit(), singleThread);
+            fileSaver.saveFactorial(singleThreadedFactorial.getName(), Util.getLimit(), singleThread);
         }
 
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
@@ -50,8 +53,6 @@ public class FactorialSimulation {
             case 1:
                 System.err.println("Is bigger");
         }
-        
-       
     }
 
 }

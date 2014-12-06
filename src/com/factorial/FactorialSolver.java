@@ -5,15 +5,13 @@
  */
 package com.factorial;
 
+import java.math.BigInteger;
+
 /**
  *
  * @author mat
  */
-public class Util {    
-    private static int number = 133_336;
-    
-    
-    public static int getLimit(){
-        return number;
-    }
+public interface FactorialSolver {
+    public BigInteger solve();
+    public String getName();
 }
