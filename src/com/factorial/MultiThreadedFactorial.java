@@ -92,7 +92,7 @@ class Solver implements Callable<BigInteger> {
         BigInteger sum = BigInteger.ONE;
 
         for (int i = min; i <= max; i += 5000) {
-            for (int k = i; k <= i + 5000 && k <= max; k++) {
+            for (int k = i; k < i + 5000 && k <= max; k++) {
                 sum = sum.multiply(BigInteger.valueOf(k));
             }
             bigSum = bigSum.multiply(sum);
