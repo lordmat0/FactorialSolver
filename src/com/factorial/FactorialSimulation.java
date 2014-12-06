@@ -33,10 +33,7 @@ public class FactorialSimulation {
             singleThread = fileLoader.getFactorial(singleThreadedFactorial.getName(), Util.getLimit());
             System.out.println("Reading from file");
         } else {
-            singleThread = singleThreadedFactorial.solve();
-
-            FileSaver fileSaver = new FileSaver();
-            fileSaver.saveFactorial(singleThreadedFactorial.getName(), Util.getLimit(), singleThread);
+            singleThread = new FactorialSaver(singleThreadedFactorial).solve();
         }
 
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
