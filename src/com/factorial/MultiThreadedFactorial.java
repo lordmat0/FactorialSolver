@@ -20,20 +20,21 @@ import java.util.concurrent.Future;
  */
 public class MultiThreadedFactorial {
 
+    private int availableProcessors;
     private int threadToSolve;
 
-    public MultiThreadedFactorial(){
-        this(1000);
+    public MultiThreadedFactorial() {
+        availableProcessors = Runtime.getRuntime().availableProcessors();
+        threadToSolve = Util.getLimit() / availableProcessors;
+
+        if (threadToSolve * availableProcessors != Util.getLimit()) {
+            // Tasks can't be divided without reminder
+            threadToSolve = 50_000;
+        } 
     }
-    
-    public MultiThreadedFactorial(int threadToSolve){
-        this.threadToSolve = threadToSolve;
-    }
-    
-    
-    
+
     public BigInteger solve() {
-        ExecutorService executor = Executors.newFixedThreadPool(8);
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         List<Future<BigInteger>> list = new ArrayList<Future<BigInteger>>();
 
         BigInteger current = BigInteger.ONE;
@@ -58,6 +59,8 @@ public class MultiThreadedFactorial {
 
         for (Future<BigInteger> future : list) {
             try {
+
+                // Bottleneck here
                 current = current.multiply(future.get());
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -67,7 +70,7 @@ public class MultiThreadedFactorial {
         }
 
         executor.shutdown();
-        
+
         return current;
     }
 
@@ -85,13 +88,20 @@ class Solver implements Callable<BigInteger> {
 
     @Override
     public BigInteger call() throws Exception {
+        BigInteger bigSum = BigInteger.ONE;
         BigInteger sum = BigInteger.ONE;
 
-        for (int i = min; i <= max; i++) {
-            sum = sum.multiply(BigInteger.valueOf(i));
+        for (int i = min; i <= max; i += 5000) {
+            for (int k = i; k <= i + 5000 && k <= max; k++) {
+                sum = sum.multiply(BigInteger.valueOf(k));
+            }
+            bigSum = bigSum.multiply(sum);
+            sum = BigInteger.ONE;
         }
 
-        return sum;
+        System.out.println("Completed " + min + " " + max);
+
+        return bigSum;
     }
 
 }

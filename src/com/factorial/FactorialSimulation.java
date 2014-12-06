@@ -15,10 +15,11 @@ public class FactorialSimulation {
     
     public static void main(String []args){
         
+        System.out.println("Number of cores: " + Runtime.getRuntime().availableProcessors());
         System.out.println("Solving " + Util.getLimit() + " factorial");
         
         long now = System.currentTimeMillis();
-        BigInteger singleThread = new SingleThreadedFactorial().solve();
+        BigInteger singleThread = BigInteger.ONE;// new SingleThreadedFactorial().solve();
         
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
         
