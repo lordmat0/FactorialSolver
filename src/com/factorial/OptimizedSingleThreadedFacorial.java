@@ -33,7 +33,7 @@ public class OptimizedSingleThreadedFacorial implements FactorialSolver {
 
     @Override
     public String getName() {
-        return OptimizedSingleThreadedFacorial.class.getName();
+        return OptimizedSingleThreadedFacorial.class.getSimpleName();
     }
 
 }
