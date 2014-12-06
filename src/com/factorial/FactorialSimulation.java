@@ -13,15 +13,24 @@ import java.math.BigInteger;
  */
 public class FactorialSimulation {
 
-    public static void main(String[] args) {
+    private BigInteger singleThread;
 
+    public FactorialSimulation() {
+    }
+
+    public void startSimulation() {
         System.out.println("Number of cores: " + Runtime.getRuntime().availableProcessors());
         System.out.println("Solving " + Util.getLimit() + " factorial");
-
-        long now = System.currentTimeMillis();
         
+        testSingleThreaded();
+        testSolver(new OptimizedSingleThreadedFacorial());
+        testSolver(new MultiThreadedFactorial());
+    }
+
+    public void testSingleThreaded() {
+        long now = System.currentTimeMillis();
+
         FactorialSolver singleThreadedFactorial = new SingleThreadedFactorial();
-        BigInteger singleThread = null;
 
         FileLoader fileLoader = new FileLoader();
 
@@ -36,30 +45,35 @@ public class FactorialSimulation {
         }
 
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
+    }
 
-        now = System.currentTimeMillis();
+    public void testSolver(FactorialSolver solver) {
+        long now = System.currentTimeMillis();
         
-        BigInteger optimizedSingleThread = new OptimizedSingleThreadedFacorial().solve();
+        BigInteger result = solver.solve();
+
+        System.out.println(solver.getName() + " Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
         
-        System.out.println("Optimized Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
-        
-        now = System.currentTimeMillis();
+        testCorrectness(result);
+    }
 
-        BigInteger multiThreaded = new MultiThreadedFactorial().solve();
 
-        System.out.println("Multi thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
+    public void testCorrectness(BigInteger testNumber) {
 
-        switch(singleThread.compareTo(multiThreaded)){
+        switch (singleThread.compareTo(testNumber)) {
             case -1:
                 System.err.println("Is less than");
                 break;
             case 0:
-                System.out.println("Is equal");
+                System.out.println("Is equal (correct result)");
                 break;
             case 1:
                 System.err.println("Is bigger");
         }
     }
-    
+
+    public static void main(String[] args) {
+        new FactorialSimulation().startSimulation();
+    }
 
 }
