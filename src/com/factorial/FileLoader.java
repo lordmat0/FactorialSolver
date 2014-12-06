@@ -19,7 +19,7 @@ public class FileLoader {
     
     
     public boolean factorialExists(String methodOfSolve, int solvedNumber){
-        File file = new File(methodOfSolve + "-" + solvedNumber);
+        File file = new File(methodOfSolve + "-" + solvedNumber + ".dat");
         
         return file.isFile();
     }
