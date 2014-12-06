@@ -46,6 +46,7 @@ public class FactorialSimulation {
 
         System.out.println(solver.getName() + " Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
 
+       
         testCorrectness(result);
     }
 
