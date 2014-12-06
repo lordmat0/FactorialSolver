@@ -16,7 +16,7 @@ public class FactorialSimulation {
     public void startSimulation() {
         System.out.println("Number of cores: " + Runtime.getRuntime().availableProcessors());
         System.out.println("Solving " + Util.getLimit() + " factorial");
-        
+
         testSingleThreaded();
         testSolver(new OptimizedSingleThreadedFacorial());
         testSolver(new MultiThreadedFactorial());
@@ -41,27 +41,30 @@ public class FactorialSimulation {
 
     public void testSolver(FactorialSolver solver) {
         long now = System.currentTimeMillis();
-        
+
         BigInteger result = solver.solve();
 
         System.out.println(solver.getName() + " Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
-        
+
         testCorrectness(result);
     }
 
-
     public void testCorrectness(BigInteger testNumber) {
-
-        switch (singleThread.compareTo(testNumber)) {
-            case -1:
-                System.err.println("Is less than");
-                break;
-            case 0:
-                System.out.println("Is equal (correct result)");
-                break;
-            case 1:
-                System.err.println("Is bigger");
+        if (singleThread != null) {
+            switch (singleThread.compareTo(testNumber)) {
+                case -1:
+                    System.err.println("Is less than");
+                    break;
+                case 0:
+                    System.out.println("Is equal (correct result)");
+                    break;
+                case 1:
+                    System.err.println("Is bigger");
+            }
+        }else{
+            System.out.println("Unable to test as single thread is null");
         }
+
     }
 
     public static void main(String[] args) {
