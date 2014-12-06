@@ -3,18 +3,12 @@ FactorialSolver
 
 Examples of a single threaded and multi threaded factorial solver
 
-Some data I've tested with
+Some data I've tested with:
 
-Processor: i5-2960k
+Processor: i5-2960k, Java 8 Orcale, Linux
 
-Solving 100000
+Solving 500,000
 
-Single thread Seconds 7.872
-
-Multi thread Seconds 1.387
-
-Solving 500000 factorial
-
-Single thread Seconds 236.569
-
-Multi thread Seconds 44.888
+* Single thread Seconds 88.746
+* Optimized single thread seconds 29.391
+* Multi thread Seconds 3.277
