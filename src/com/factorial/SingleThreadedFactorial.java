@@ -16,7 +16,7 @@ public class SingleThreadedFactorial implements FactorialSolver {
     @Override
     public BigInteger solve() {
 
-        BigInteger current = new BigInteger("1");
+        BigInteger current = BigInteger.ONE;
 
         for (int i = 2; i <= Util.getLimit(); i++) {
             current = current.multiply(BigInteger.valueOf(i));

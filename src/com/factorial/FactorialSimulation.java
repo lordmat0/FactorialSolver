@@ -38,6 +38,12 @@ public class FactorialSimulation {
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
 
         now = System.currentTimeMillis();
+        
+        BigInteger optimizedSingleThread = new OptimizedSingleThreadedFacorial().solve();
+        
+        System.out.println("Optimized Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
+        
+        now = System.currentTimeMillis();
 
         BigInteger multiThreaded = new MultiThreadedFactorial().solve();
 
@@ -54,5 +60,6 @@ public class FactorialSimulation {
                 System.err.println("Is bigger");
         }
     }
+    
 
 }
