@@ -17,17 +17,22 @@ public class FactorialSimulation {
         System.out.println("Number of cores: " + Runtime.getRuntime().availableProcessors());
         System.out.println("Solving " + Util.getLimit() + " factorial");
 
-        testSingleThreaded();
-        testSolver(new OptimizedSingleThreadedFacorial());
-        testSolver(new MultiThreadedFactorial());
+        //testSingleThreaded();
+        //testSolver(new OptimizedSingleThreadedFacorial());
+        
+        testSolver(new FactorialSaver(new FactorialLoader(new FactorialTimer(new SingleThreadedFactorial()))));
+        testSolver(new FactorialSaver(new FactorialLoader(new FactorialTimer(new MultiThreadedFactorial()))));
+        
+        //testSolver(new MultiThreadedFactorial());
     }
-
+    
+    /*
     public void testSingleThreaded() {
         long now = System.currentTimeMillis();
 
         FactorialSolver singleThreadedFactorial = new SingleThreadedFactorial();
 
-        FileLoader fileLoader = new FileLoader();
+        FactorialLoader fileLoader = new FactorialLoader();
 
         if (fileLoader.factorialExists(singleThreadedFactorial.getName(), Util.getLimit())) {
             singleThread = fileLoader.getFactorial(singleThreadedFactorial.getName(), Util.getLimit());
@@ -38,14 +43,10 @@ public class FactorialSimulation {
 
         System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
     }
+    */
 
     public void testSolver(FactorialSolver solver) {
-        long now = System.currentTimeMillis();
-
         BigInteger result = solver.solve();
-
-        System.out.println(solver.getName() + " Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
-
        
         testCorrectness(result);
     }
