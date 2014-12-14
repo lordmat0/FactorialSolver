@@ -20,30 +20,12 @@ public class FactorialSimulation {
         //testSingleThreaded();
         //testSolver(new OptimizedSingleThreadedFacorial());
         
-        testSolver(new FactorialSaver(new FactorialLoader(new FactorialTimer(new SingleThreadedFactorial()))));
+        //testSolver(new FactorialSaver(new FactorialLoader(new FactorialTimer(new SingleThreadedFactorial()))));
         testSolver(new FactorialSaver(new FactorialLoader(new FactorialTimer(new MultiThreadedFactorial()))));
         
         //testSolver(new MultiThreadedFactorial());
     }
     
-    /*
-    public void testSingleThreaded() {
-        long now = System.currentTimeMillis();
-
-        FactorialSolver singleThreadedFactorial = new SingleThreadedFactorial();
-
-        FactorialLoader fileLoader = new FactorialLoader();
-
-        if (fileLoader.factorialExists(singleThreadedFactorial.getName(), Util.getLimit())) {
-            singleThread = fileLoader.getFactorial(singleThreadedFactorial.getName(), Util.getLimit());
-            System.out.println("Reading from file");
-        } else {
-            singleThread = new FactorialSaver(singleThreadedFactorial).solve();
-        }
-
-        System.out.println("Single thread Seconds " + ((double) System.currentTimeMillis() - now) / 1000);
-    }
-    */
 
     public void testSolver(FactorialSolver solver) {
         BigInteger result = solver.solve();
